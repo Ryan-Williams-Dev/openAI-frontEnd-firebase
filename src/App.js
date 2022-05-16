@@ -5,7 +5,7 @@ import Prompt from './components/Prompt';
 function App() {
   return (
     <div className="App">
-      <h1>Hello</h1>
+      <h1>Shopify Front End Challenge</h1>
       <Login />
     </div>
   );
