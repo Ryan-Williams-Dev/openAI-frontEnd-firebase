@@ -3,8 +3,8 @@ import React, { useRef } from 'react';
 import './login-styles.scss'
 
 const Login = () => {
-  const emailRef = useRef()
-  const passwordRef = useRef()
+  const emailRef = useRef(null)
+  const passwordRef = useRef(null)
 
   const handleSubmit = (e) => {
     e.preventDefault()
