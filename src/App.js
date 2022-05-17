@@ -17,6 +17,7 @@ function App() {
             
             <Route exact path="/" element={<Homepage />} />
             <Route path="/register" element={<Register/>} />
+            <Route path='/login' element={<Login/>} />
 
           </Routes>
         </AuthProvider>

@@ -1,14 +1,30 @@
-import { Box, Button, TextField } from '@mui/material';
-import React, { useRef } from 'react';
+import { Box, Button, TextField, Typography, Alert } from '@mui/material';
+import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext.jsx';
 import './login-styles.scss'
 
 const Login = () => {
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { login } = useAuth()
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault()
-    console.log('email: ', emailRef, '\npassword: ', passwordRef)
+    
+    try {
+      setError('')
+      setLoading(true)
+      await login(emailRef.current.value, passwordRef.current.value)
+    } catch (err){
+      setLoading(false)
+      console.log(err)
+      return setError('Failed to log in\n', err.message)
+    }
+    setLoading(false)
+
   }
 
   return (
@@ -19,9 +35,13 @@ const Login = () => {
       >
         <div className='form-container'>
 
-          <TextField type='email' required label='email' ref={emailRef} />
-          <TextField type='password' required label='password' ref={passwordRef} />
-          <Button type='submit' variant='contained' >Login</Button> 
+          <TextField type='email' required label='email' inputRef={emailRef} />
+          <TextField type='password' required label='password' inputRef={passwordRef} />
+          {error && <Alert severity="error"  >{error}</Alert>}
+          <Button type='submit' variant='contained' >Log in</Button>
+          <Typography>
+            Need an account? <Link to='/register'>Sign up</Link>
+          </Typography>
 
         </div>
       </Box>

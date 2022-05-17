@@ -1,7 +1,8 @@
-import { Alert, Box, Button, TextField } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import { Alert, Box, Button, TextField, Typography } from '@mui/material';
+import { useRef, useState } from 'react';
 import './login-styles.scss';
 import { useAuth } from '../../contexts/AuthContext.jsx';
+import { Link } from "react-router-dom"
 
 const Register = () => {
   const emailRef = useRef()
@@ -42,7 +43,10 @@ const Register = () => {
           <TextField type='password' required label='password' inputRef={passwordRef} />
           <TextField type='password' required label='confirm password' inputRef={confirmPasswordRef} />
           {error && <Alert severity="error"  >{error}</Alert>}
-          <Button disabled={loading} type='submit' variant='contained' >Login</Button> 
+          <Button disabled={loading} type='submit' variant='contained' >Login</Button>
+          <Typography>
+            Already Have an account? <Link to="/login" >Log In</Link>
+          </Typography>
 
         </div>
       </Box>
