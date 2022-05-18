@@ -3,14 +3,19 @@ import Login from './components/Login/Login';
 import Register from './components/Login/Resgister';
 import Prompt from './components/Prompt';
 import Homepage from './components/Homepage/Homepage';
+import Navbar from './components/Navbar/Navbar.jsx'
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState } from 'react'
 
 function App() {
+  const [ error, setError ] = useState(null)
+
   return (
 
     <div className="App">
-      <h1>Shopify Front End Challenge</h1>
+      <Navbar errorSetter={setError}/>
+      {error}
       <BrowserRouter>
         <AuthProvider>
           <Routes>

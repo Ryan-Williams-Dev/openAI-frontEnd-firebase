@@ -20,7 +20,7 @@ export function AuthProvider(props) {
     return signInWithEmailAndPassword(auth, email, password)
   }
 
-  function signOut() {
+  function logout() {
     return signOut(auth)
   }
 
@@ -38,7 +38,7 @@ export function AuthProvider(props) {
     currentUser,
     register,
     login,
-    signOut
+    logout
   }
 
   return (

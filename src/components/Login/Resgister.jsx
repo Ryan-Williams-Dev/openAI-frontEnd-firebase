@@ -1,16 +1,17 @@
-import { Alert, Box, Button, TextField, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Button, TextField, Typography } from '@mui/material';
 import { useRef, useState } from 'react';
 import './login-styles.scss';
 import { useAuth } from '../../contexts/AuthContext.jsx';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const Register = () => {
   const emailRef = useRef()
   const passwordRef = useRef()
   const confirmPasswordRef = useRef()
   const { register } = useAuth()
-  const [error, setError] = useState('')
+  const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -20,13 +21,19 @@ const Register = () => {
     }
 
     try {
-      setError('')
+      setError(null)
       setLoading(true)
       await register(emailRef.current.value, passwordRef.current.value)
+      navigate("/")
     } catch (err){
       setLoading(false)
       console.log(err)
-      return setError('Failed to create an account\n', err.message)
+      return setError(
+        <Alert severity='error' onClose={() => setError(null)}>
+          <AlertTitle>Failed to create account</AlertTitle>
+          {err.message}
+        </Alert>
+      )
     }
     setLoading(false)
 
@@ -42,8 +49,8 @@ const Register = () => {
           <TextField type='email' required label='email' inputRef={emailRef}/>
           <TextField type='password' required label='password' inputRef={passwordRef} />
           <TextField type='password' required label='confirm password' inputRef={confirmPasswordRef} />
-          {error && <Alert severity="error"  >{error}</Alert>}
-          <Button disabled={loading} type='submit' variant='contained' >Login</Button>
+          {error}
+          <Button disabled={loading} type='submit' variant='contained' >Register</Button>
           <Typography>
             Already Have an account? <Link to="/login" >Log In</Link>
           </Typography>
